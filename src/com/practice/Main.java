@@ -10,7 +10,14 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         Process process;
-        process = Runtime.getRuntime().exec("");
+        // the cmd.exe process is headless - cmd.exe /c notepad.exe opens
+        // an instance of notepad - the process.waitFor() doesn't return
+        // until the notepad window closes
+        // may be helpful to output the cmd.exe via cmd.exe to a log file
+        // for review
+        // "cmd.exe /c git status > test.log" - successfully output to file
+        // git commands this way work as expected
+        process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
         process.waitFor();
         System.out.println("End program");
     }
