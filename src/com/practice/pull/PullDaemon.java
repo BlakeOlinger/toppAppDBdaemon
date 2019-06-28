@@ -39,7 +39,7 @@ public class PullDaemon implements Runnable{
                 var testSleepIntervalMS = 10_000;
 
                 // fully works - can't have any untracked files in local repo though
-                var process = Runtime.getRuntime().exec("cmd.exe /c git pull origin master");
+                var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
 
                 process.waitFor();
 

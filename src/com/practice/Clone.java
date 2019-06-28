@@ -40,7 +40,8 @@ public class Clone implements Runnable {
 
         try {
             if (Config.isDBUninitialized) {
-                var process = Runtime.getRuntime().exec("cmd.exe /c git clone https://github.com/BlakeOlinger/toppAppDBdaemon.git");
+                var process = Runtime.getRuntime().exec(
+                        "cmd.exe /c git clone https://github.com/BlakeOlinger/toppAppDBdaemon.git");
 
                 process.waitFor();
 
