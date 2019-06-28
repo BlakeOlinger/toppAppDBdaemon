@@ -1,9 +1,10 @@
 package com.practice.pull;
 
-import java.io.IOException;
+import com.practice.config.Config;
 
 public class PullDaemon implements Runnable{
     private final Thread thread;
+    public static String programStop ;
 
     public PullDaemon() {
         thread = new Thread(this, "Pull Daemon");
@@ -28,21 +29,26 @@ public class PullDaemon implements Runnable{
     public void run() {
 
         do {
+
+            new Config().checkProgramState();
+
             // add a GUI window indicating status - near future
             try {
                 var sleepIntervalMS = 600_000;
-                var testSleepIntervalMS = 30_000;
+                var testSleepIntervalMS = 10_000;
                 // fully works - can't have any untracked files in local repo though
-                var process = Runtime.getRuntime().exec("cmd.exe /c git pull origin master");
+                // var process = Runtime.getRuntime().exec("cmd.exe /c git pull origin master");
 
-                process.waitFor();
+                // process.waitFor();
 
-                System.out.println("End program");
+                System.out.println("End Update");
 
                 Thread.sleep(testSleepIntervalMS);
-            } catch (IOException | InterruptedException ignore) {
+            } catch (InterruptedException ignore) {
 
             }
-        } while(true);
+
+            System.out.println(PullDaemon.programStop.compareTo("0"));
+        } while(PullDaemon.programStop.compareTo("0") == 0);
     }
 }
