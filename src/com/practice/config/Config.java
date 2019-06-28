@@ -7,7 +7,7 @@ public class Config implements Runnable{
     private final Thread thread;
     public static String installDirectory = "toppAppDBdaemon";
     public static boolean isDBUninitialized = false;
-    public static String programStop = "1";
+    public static String programStop = "0";
 
     public Config() {
         thread = new Thread(this, "Read Config");
