@@ -4,12 +4,11 @@ package com.practice;
 // the app install directory to automate git functions and
 // later automate app updates
 
-import java.io.IOException;
+import com.practice.pull.PullDaemon;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-        Process process;
+    public static void main(String[] args) {
         // the cmd.exe process is headless - cmd.exe /c notepad.exe opens
         // an instance of notepad - the process.waitFor() doesn't return
         // until the notepad window closes
@@ -17,8 +16,10 @@ public class Main {
         // for review
         // "cmd.exe /c git status > test.log" - successfully output to file
         // git commands this way work as expected
-        process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
-        process.waitFor();
-        System.out.println("End program");
+
+        // process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
+
+        new PullDaemon().start();
+
     }
 }
