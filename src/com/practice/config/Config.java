@@ -7,6 +7,9 @@ import java.io.IOException;
 
 public class Config implements Runnable{
     private final Thread thread;
+    public static String installDirectory = "toppAppDBdaemon";
+    public static boolean isDBUninitialized = false;
+    public static String programStop = "1";
 
     public Config() {
         thread = new Thread(this, "Read Config");
@@ -30,23 +33,25 @@ public class Config implements Runnable{
     @Override
     public void run() {
 
-        System.out.println("Update Program State Start...");
+        if(!Config.isDBUninitialized) {
 
 
-        FileInputStream configFile;
+
+            FileInputStream configFile;
             try {
-                  configFile = new FileInputStream("DBDaemon.config");
+                configFile = new FileInputStream(
+                        Config.installDirectory +
+                        "/DBDaemon.config");
 
-                    int readByte;
-                    int index = 0;
+                int readByte;
+                int index = 0;
                 do {
                     readByte = configFile.read();
 
-                    System.out.println("input value: " + (char) readByte);
 
-                    if(readByte != -1) {
-                        for(;index < 1; ++index) {
-                            PullDaemon.programStop = String.valueOf((char) readByte);
+                    if (readByte != -1) {
+                        for (; index < 1; ++index) {
+                            Config.programStop = String.valueOf((char) readByte);
                         }
                     }
 
@@ -56,6 +61,6 @@ public class Config implements Runnable{
             } catch (IOException ignore) {
 
             }
-        System.out.println("Update Program State End");
+        }
     }
 }

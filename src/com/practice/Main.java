@@ -19,6 +19,9 @@ public class Main {
 
         // process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
 
+        var DBInitializationCheck = new Clone();
+        DBInitializationCheck.checkAndInitializeDB();
+
         new PullDaemon().start();
 
     }
