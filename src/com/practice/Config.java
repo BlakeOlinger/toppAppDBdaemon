@@ -8,7 +8,7 @@ public class Config implements Runnable{
     static String programState = "0";
 
     Config() {
-        thread = new Thread(this, "Read Config");
+        thread = new Thread(this, "Monitor Program State");
     }
 
     void monitorProgramState() {
@@ -28,31 +28,26 @@ public class Config implements Runnable{
      */
     @Override
     public void run() {
-            FileInputStream configFile;
-
-            do {
-                try {
-                    var programStatePath = "/programFiles/config/DBDaemon.config";
-                    configFile = new FileInputStream(programStatePath);
-
-                    int readByte;
-                    int index = 0;
+        var programStatePath = "programFiles/config/DBdaemon.config";
+        int readByte;
+        var index = 0;
+        do {
+                try (var DBconfig = new FileInputStream(programStatePath)){
                     do {
-                        readByte = configFile.read();
-
-
-                        if (readByte != -1) {
-                            for (; index < 1; ++index) {
-                                Config.programState = String.valueOf((char) readByte);
-                            }
-                        }
+                        readByte = DBconfig.read();
+                      for(;index < 1; ++index) {
+                          programState = String.valueOf((char) readByte);
+                      }
 
                     } while (readByte != -1);
-
-                    configFile.close();
                 } catch (IOException ignore) {
 
                 }
-            } while (programState.compareTo("0") == 0);
+                index = 0;
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ignore) {
+            }
+        } while (programState.compareTo("0") == 0);
     }
 }

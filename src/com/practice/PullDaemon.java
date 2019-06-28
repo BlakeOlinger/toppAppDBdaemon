@@ -27,8 +27,6 @@ public class PullDaemon implements Runnable{
     @Override
     public void run() {
 
-        new Config().monitorProgramState();
-
         do {
 
 

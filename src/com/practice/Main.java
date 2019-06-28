@@ -17,6 +17,8 @@ public class Main {
 
         // process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
 
+        new Config().monitorProgramState();
+
         new PullDaemon().start();
 
     }
