@@ -1,7 +1,5 @@
 package com.practice.config;
 
-import com.practice.pull.PullDaemon;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 
