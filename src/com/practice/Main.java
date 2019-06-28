@@ -4,8 +4,6 @@ package com.practice;
 // the app install directory to automate git functions and
 // later automate app updates
 
-import com.practice.pull.PullDaemon;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -18,9 +16,6 @@ public class Main {
         // git commands this way work as expected
 
         // process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
-
-        var DBInitializationCheck = new Clone();
-        DBInitializationCheck.checkAndInitializeDB();
 
         new PullDaemon().start();
 

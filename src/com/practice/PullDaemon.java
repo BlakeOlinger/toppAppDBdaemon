@@ -1,17 +1,15 @@
-package com.practice.pull;
-
-import com.practice.config.Config;
+package com.practice;
 
 import java.io.IOException;
 
 public class PullDaemon implements Runnable{
     private final Thread thread;
 
-    public PullDaemon() {
+    PullDaemon() {
         thread = new Thread(this, "Pull Daemon");
     }
 
-    public void start() {
+    void start() {
         thread.start();
     }
 
@@ -29,9 +27,10 @@ public class PullDaemon implements Runnable{
     @Override
     public void run() {
 
+        new Config().monitorProgramState();
+
         do {
 
-            new Config().checkProgramState();
 
             // add a GUI window indicating status - near future
             try {
@@ -50,7 +49,7 @@ public class PullDaemon implements Runnable{
 
             }
 
-            System.out.println(Config.programStop.compareTo("0"));
-        } while(Config.programStop.compareTo("0") == 0);
+            System.out.println(Config.programState.compareTo("0"));
+        } while(Config.programState.compareTo("0") == 0);
     }
 }
