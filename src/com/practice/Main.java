@@ -7,19 +7,16 @@ package com.practice;
 public class Main {
 
     public static void main(String[] args) {
-        // the cmd.exe process is headless - cmd.exe /c notepad.exe opens
-        // an instance of notepad - the process.waitFor() doesn't return
-        // until the notepad window closes
-        // may be helpful to output the cmd.exe via cmd.exe to a log file
-        // for review
-        // "cmd.exe /c git status > test.log" - successfully output to file
-        // git commands this way work as expected
 
-        // process = Runtime.getRuntime().exec("cmd.exe /c git status > test.log");
-
+        // -- Only reads first character of DBdaemon.config to monitor
+        // program run status - '0' = CONTINUE_RUNNING - '1' = END_MIRCROSERVICE
         new Config().monitorProgramState();
 
         new PullDaemon().start();
+
+        // -- Listens to the second character of DBdaemon.config to monitor
+        // if a push command has been sent - '1' = NO_PUSH - '0' = PUSH
+        new PushDaemon().start();
 
     }
 }

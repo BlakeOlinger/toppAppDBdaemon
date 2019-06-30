@@ -1,3 +1,7 @@
-programFiles/config/*.config
+programFiles/config/
 
-toppAppDBdaemon/*
+toppAppDBdaemon/
+
+out/
+
+.idea/workspace.xml

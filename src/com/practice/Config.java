@@ -5,7 +5,8 @@ import java.io.IOException;
 
 public class Config implements Runnable{
     private final Thread thread;
-    static String programState = "0";
+    static String programState = "1";
+    static String pushState = "1";
 
     Config() {
         thread = new Thread(this, "Monitor Program State");

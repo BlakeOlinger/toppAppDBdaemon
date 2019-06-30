@@ -31,19 +31,18 @@ public class PullDaemon implements Runnable{
 
             System.out.println(" Database Daemon - Database Sync Daemon - Start");
             try {
-               //  var sleepIntervalMS = 600_000;
                 var testSleepIntervalMS = 10_000;
 
                 System.out.println(" Auto-Sync Start - Interval - 10,000 ms");
-                var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
+               // var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
 
-                process.waitFor();
+              //  process.waitFor();
 
                 System.out.println(" Auto-Sync End - Database Updated");
 
                 System.out.println(" Database Daemon - Database Sync Daemon - Sleep 10,000 ms");
                 Thread.sleep(testSleepIntervalMS);
-            } catch (InterruptedException | IOException ignore) {
+            } catch (InterruptedException ignore) {
 
             }
 
