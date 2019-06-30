@@ -29,25 +29,26 @@ public class PullDaemon implements Runnable{
 
         do {
 
-
-            // add a GUI window indicating status - near future
+            System.out.println(" Database Daemon - Database Sync Daemon - Start");
             try {
                //  var sleepIntervalMS = 600_000;
                 var testSleepIntervalMS = 10_000;
 
-                // fully works - can't have any untracked files in local repo though
+                System.out.println(" Auto-Sync Start - Interval - 10,000 ms");
                 var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
 
                 process.waitFor();
 
-                // System.out.println("End Update");
+                System.out.println(" Auto-Sync End - Database Updated");
 
+                System.out.println(" Database Daemon - Database Sync Daemon - Sleep 10,000 ms");
                 Thread.sleep(testSleepIntervalMS);
             } catch (InterruptedException | IOException ignore) {
 
             }
 
-            System.out.println(Config.programState.compareTo("0"));
         } while(Config.programState.compareTo("0") == 0);
+
+        System.out.println(" Database Daemon - Database Sync Daemon - End");
     }
 }

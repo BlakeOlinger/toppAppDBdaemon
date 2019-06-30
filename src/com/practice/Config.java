@@ -31,7 +31,9 @@ public class Config implements Runnable{
         var programStatePath = "programFiles/config/DBdaemon.config";
         int readByte;
         var index = 0;
+        System.out.println(" Database Daemon - Start");
         do {
+            System.out.println(" Reading Database.config...");
                 try (var DBconfig = new FileInputStream(programStatePath)){
                     do {
                         readByte = DBconfig.read();
@@ -39,15 +41,20 @@ public class Config implements Runnable{
                           programState = String.valueOf((char) readByte);
                       }
 
+                        System.out.println(" Database Program State - " + programState);
                     } while (readByte != -1);
                 } catch (IOException ignore) {
 
                 }
                 index = 0;
             try {
+
+                System.out.println(" Database Thread Sleep - 2,000 ms");
                 Thread.sleep(2000);
             } catch (InterruptedException ignore) {
             }
         } while (programState.compareTo("0") == 0);
+
+        System.out.println(" Database Daemon - End");
     }
 }
