@@ -1,7 +1,6 @@
 package com.practice;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
@@ -65,9 +64,11 @@ class PushDaemon implements Runnable{
 
             Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
 
-            // Runtime.getRuntime().exec(" cmd.exe /c git push origin/master");
-        
-        } catch (IOException ignore) {
+             Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
+
+            System.out.println(" Database Daemon - Push Remote - Success");
+
+        } catch (IOException | InterruptedException ignore) {
         }
 
 
