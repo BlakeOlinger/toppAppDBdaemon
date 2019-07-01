@@ -67,8 +67,8 @@ class PushDaemon implements Runnable{
                 commitMessage + "\n";
 
         try {
-            Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
-            Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
+            Runtime.getRuntime().exec( " cmd.exe /c cd toppAppDBdaemon && git commit -a -m " + commitMessage);
+            Runtime.getRuntime().exec(" cmd.exe /c cd toppAppDBdaemon && git push origin master").waitFor();
         } catch (IOException | InterruptedException ignore) {
         }
 
