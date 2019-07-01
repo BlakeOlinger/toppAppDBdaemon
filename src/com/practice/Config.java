@@ -59,7 +59,10 @@ public class Config implements Runnable{
         } while (programState.compareTo("0") == 0);
 
         logMessage += " Database Daemon - End\n";
+        /*
         FileLog.message += logMessage;
         new FileLog().log();
+
+         */
     }
 }

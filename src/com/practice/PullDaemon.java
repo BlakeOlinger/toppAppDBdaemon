@@ -50,7 +50,10 @@ public class PullDaemon implements Runnable{
         } while(Config.programState.compareTo("0") == 0);
 
         logMessage += " Database Daemon - Database Sync Daemon - End\n";
+        /*
         FileLog.message += logMessage;
         new FileLog().log();
+
+         */
     }
 }

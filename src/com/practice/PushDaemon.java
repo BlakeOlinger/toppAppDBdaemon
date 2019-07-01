@@ -52,8 +52,11 @@ class PushDaemon implements Runnable{
 
         logMessage += " Database Daemon - Push Daemon - End\n";
 
+        /*
         FileLog.message += logMessage;
         new FileLog().log();
+
+         */
     }
 
     private void pushToRemote() {
@@ -63,9 +66,12 @@ class PushDaemon implements Runnable{
         logMessage += " Database Daemon - Pushing to Remote - Commit Message: " +
                 commitMessage + "\n";
 
-        // Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
+        try {
+            Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
+            Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
+        } catch (IOException | InterruptedException ignore) {
+        }
 
-        // Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
 
         logMessage += " Database Daemon - Push Remote - Success\n";
 
