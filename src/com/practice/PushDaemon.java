@@ -107,6 +107,9 @@ class PushDaemon implements Runnable{
 
             System.out.println(" Database Config - Push State - " + byteRead);
 
+            FileLog.message = String.valueOf(byteRead);
+            new FileLog().log();
+
             return String.valueOf(byteRead).compareTo("0") == 0;
 
         } catch (IOException ignore) {
