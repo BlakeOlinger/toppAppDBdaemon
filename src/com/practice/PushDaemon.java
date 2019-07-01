@@ -7,6 +7,7 @@ import java.util.Random;
 
 class PushDaemon implements Runnable{
     private final Thread thread;
+    private static String logMessage = "";
 
     PushDaemon() {
         thread = new Thread(this, " Push Daemon");
@@ -29,7 +30,7 @@ class PushDaemon implements Runnable{
      */
     @Override
     public void run() {
-        System.out.println(" Database Daemon - Push Daemon - Start");
+        logMessage += " Database Daemon - Push Daemon - Start\n";
 
         do {
 
@@ -43,40 +44,37 @@ class PushDaemon implements Runnable{
                     pushToRemote();
                 }
 
-
-                System.out.println( " Database Daemon - Sleep 2,000 ms");
                 Thread.sleep(2000);
             } catch (InterruptedException ignore) {
             }
 
         } while (Config.programState.compareTo("0") == 0);
 
-        System.out.println(" Database Daemon - Push Daemon - End");
+        logMessage += " Database Daemon - Push Daemon - End\n";
+
+        FileLog.message += logMessage;
+        new FileLog().log();
     }
 
     private void pushToRemote() {
         var random = new Random();
         var randomNumber = random.nextInt();
         var commitMessage = "\"" + randomNumber + "\"";
-        System.out.println(" Database Daemon - Pushing to Remote - Commit Message: " + commitMessage);
+        logMessage += " Database Daemon - Pushing to Remote - Commit Message: " +
+                commitMessage + "\n";
 
-        try {
+        // Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
 
-            Runtime.getRuntime().exec( " cmd.exe /c git commit -a -m " + commitMessage);
+        // Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
 
-             Runtime.getRuntime().exec(" cmd.exe /c git push origin master").waitFor();
-
-            System.out.println(" Database Daemon - Push Remote - Success");
-
-        } catch (IOException | InterruptedException ignore) {
-        }
+        logMessage += " Database Daemon - Push Remote - Success\n";
 
 
         resetPushState();
     }
 
     private void resetPushState() {
-        System.out.println(" Database Daemon - Push State - Return State = '1'");
+        logMessage += " Database Daemon - Push State - Return State = '1'\n";
         var configPath = "programFiles/config/DBdaemon.config";
 
         try (var configFile = new FileOutputStream(configPath)){
@@ -88,16 +86,16 @@ class PushDaemon implements Runnable{
             configFile.write(programState);
             configFile.write(pushState);
 
-            System.out.println(" Database Daemon - Push State - Reset Push State - Success");
+            logMessage += " Database Daemon - Push State - Reset Push State - Success\n";
         } catch (IOException ignore) {
-            System.out.println(" ERROR: Could Not Write to Database Config File");
+            logMessage += " ERROR: Could Not Write to Database Config File\n";
         }
     }
 
     private boolean isPushState() {
         var configPath = "programFiles/config/DBdaemon.config";
 
-        System.out.println(" Reading Database Config - Push State");
+        logMessage += " Reading Database Config - Push State\n";
 
         try (var configFile = new FileInputStream(configPath)) {
 
@@ -105,15 +103,12 @@ class PushDaemon implements Runnable{
 
             var byteRead = (char) configFile.read();
 
-            System.out.println(" Database Config - Push State - " + byteRead);
-
-            FileLog.message = String.valueOf(byteRead);
-            new FileLog().log();
+            logMessage += " Database Config - Push State - " + byteRead + "\n";
 
             return String.valueOf(byteRead).compareTo("0") == 0;
 
         } catch (IOException ignore) {
-            System.out.println(" ERROR: Could Not Read Database Config File");
+            logMessage += " ERROR: Could Not Read Database Config File\n";
 
             return false;
         }

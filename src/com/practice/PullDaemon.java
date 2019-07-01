@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class PullDaemon implements Runnable{
     private final Thread thread;
+    private static String logMessage = "";
 
     PullDaemon() {
         thread = new Thread(this, "Pull Daemon");
@@ -29,18 +30,18 @@ public class PullDaemon implements Runnable{
 
         do {
 
-            System.out.println(" Database Daemon - Database Sync Daemon - Start");
+            logMessage += " Database Daemon - Database Sync Daemon - Start\n";
             try {
                 var testSleepIntervalMS = 10_000;
 
-                System.out.println(" Auto-Sync Start - Interval - 10,000 ms");
+                logMessage += " Auto-Sync Start - Interval - 10,000 ms\n";
                 var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
 
                 process.waitFor();
 
-                System.out.println(" Auto-Sync End - Database Updated");
+                logMessage += " Auto-Sync End - Database Updated\n";
 
-                System.out.println(" Database Daemon - Database Sync Daemon - Sleep 10,000 ms");
+                logMessage += " Database Daemon - Database Sync Daemon - Sleep 10,000 ms\n";
                 Thread.sleep(testSleepIntervalMS);
             } catch (InterruptedException | IOException ignore) {
 
@@ -48,6 +49,8 @@ public class PullDaemon implements Runnable{
 
         } while(Config.programState.compareTo("0") == 0);
 
-        System.out.println(" Database Daemon - Database Sync Daemon - End");
+        logMessage += " Database Daemon - Database Sync Daemon - End\n";
+        FileLog.message += logMessage;
+        new FileLog().log();
     }
 }
