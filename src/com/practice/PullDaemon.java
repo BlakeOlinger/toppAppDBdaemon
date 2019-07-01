@@ -30,18 +30,22 @@ public class PullDaemon implements Runnable{
 
         do {
 
-            logMessage += " Database Daemon - Database Sync Daemon - Start\n";
+            logMessage = " Database Daemon - Database Sync Daemon - Start\n";
+            System.out.println(logMessage);
             try {
                 var testSleepIntervalMS = 10_000;
 
-                logMessage += " Auto-Sync Start - Interval - 10,000 ms\n";
+                logMessage = " Auto-Sync Start - Interval - 10,000 ms\n";
+                System.out.println(logMessage);
                 var process = Runtime.getRuntime().exec("cmd.exe /c cd toppAppDBdaemon/ && git pull origin master");
 
                 process.waitFor();
 
-                logMessage += " Auto-Sync End - Database Updated\n";
+                logMessage = " Auto-Sync End - Database Updated\n";
+                System.out.println(logMessage);
 
-                logMessage += " Database Daemon - Database Sync Daemon - Sleep 10,000 ms\n";
+                logMessage = " Database Daemon - Database Sync Daemon - Sleep 10,000 ms\n";
+                System.out.println(logMessage);
                 Thread.sleep(testSleepIntervalMS);
             } catch (InterruptedException | IOException ignore) {
 
@@ -49,7 +53,8 @@ public class PullDaemon implements Runnable{
 
         } while(Config.programState.compareTo("0") == 0);
 
-        logMessage += " Database Daemon - Database Sync Daemon - End\n";
+        logMessage = " Database Daemon - Database Sync Daemon - End\n";
+        System.out.println(logMessage);
         /*
         FileLog.message += logMessage;
         new FileLog().log();

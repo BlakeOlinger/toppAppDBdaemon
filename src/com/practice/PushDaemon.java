@@ -30,8 +30,8 @@ class PushDaemon implements Runnable{
      */
     @Override
     public void run() {
-        logMessage += " Database Daemon - Push Daemon - Start\n";
-
+        logMessage = " Database Daemon - Push Daemon - Start\n";
+        System.out.println(logMessage);
         do {
 
             try {
@@ -50,7 +50,8 @@ class PushDaemon implements Runnable{
 
         } while (Config.programState.compareTo("0") == 0);
 
-        logMessage += " Database Daemon - Push Daemon - End\n";
+        logMessage = " Database Daemon - Push Daemon - End\n";
+        System.out.println(logMessage);
 
         /*
         FileLog.message += logMessage;
@@ -63,8 +64,9 @@ class PushDaemon implements Runnable{
         var random = new Random();
         var randomNumber = random.nextInt();
         var commitMessage = "\"" + randomNumber + "\"";
-        logMessage += " Database Daemon - Pushing to Remote - Commit Message: " +
+        logMessage = " Database Daemon - Pushing to Remote - Commit Message: " +
                 commitMessage + "\n";
+        System.out.println(logMessage);
 
         try {
             Runtime.getRuntime().exec( " cmd.exe /c cd toppAppDBdaemon && git commit -a -m " + commitMessage);
@@ -73,14 +75,16 @@ class PushDaemon implements Runnable{
         }
 
 
-        logMessage += " Database Daemon - Push Remote - Success\n";
+        logMessage = " Database Daemon - Push Remote - Success\n";
+        System.out.println(logMessage);
 
 
         resetPushState();
     }
 
     private void resetPushState() {
-        logMessage += " Database Daemon - Push State - Return State = '1'\n";
+        logMessage = " Database Daemon - Push State - Return State = '1'\n";
+        System.out.println(logMessage);
         var configPath = "programFiles/config/DBdaemon.config";
 
         try (var configFile = new FileOutputStream(configPath)){
@@ -92,16 +96,19 @@ class PushDaemon implements Runnable{
             configFile.write(programState);
             configFile.write(pushState);
 
-            logMessage += " Database Daemon - Push State - Reset Push State - Success\n";
+            logMessage = " Database Daemon - Push State - Reset Push State - Success\n";
+            System.out.println(logMessage);
         } catch (IOException ignore) {
-            logMessage += " ERROR: Could Not Write to Database Config File\n";
+            logMessage = " ERROR: Could Not Write to Database Config File\n";
+            System.out.println(logMessage);
         }
     }
 
     private boolean isPushState() {
         var configPath = "programFiles/config/DBdaemon.config";
 
-        logMessage += " Reading Database Config - Push State\n";
+        logMessage = " Reading Database Config - Push State\n";
+        System.out.println(logMessage);
 
         try (var configFile = new FileInputStream(configPath)) {
 
@@ -109,14 +116,17 @@ class PushDaemon implements Runnable{
 
             var byteRead = (char) configFile.read();
 
-            logMessage += " Database Config - Push State - " + byteRead + "\n";
+            logMessage = " Database Config - Push State - " + byteRead + "\n";
+            System.out.println(logMessage);
 
             return String.valueOf(byteRead).compareTo("0") == 0;
 
         } catch (IOException ignore) {
-            logMessage += " ERROR: Could Not Read Database Config File\n";
+            logMessage = " ERROR: Could Not Read Database Config File\n";
+            System.out.println(logMessage);
 
             return false;
         }
     }
 }
+

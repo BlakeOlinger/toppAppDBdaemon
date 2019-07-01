@@ -34,10 +34,12 @@ public class Config implements Runnable{
         int readByte;
         var index = 0;
 
-         logMessage += " Database Daemon - Start\n";
+         logMessage = " Database Daemon - Start\n";
+        System.out.println(logMessage);
 
         do {
-            logMessage += " Reading Database.config...\n";
+            logMessage = " Reading Database.config...\n";
+            System.out.println(logMessage);
                 try (var DBconfig = new FileInputStream(programStatePath)){
                     do {
                         readByte = DBconfig.read();
@@ -45,7 +47,8 @@ public class Config implements Runnable{
                           programState = String.valueOf((char) readByte);
                       }
 
-                        logMessage += " Database Program State - " + programState + "\n";
+                        logMessage = " Database Program State - " + programState + "\n";
+                        System.out.println(logMessage);
                     } while (readByte != -1);
                 } catch (IOException ignore) {
 
@@ -58,7 +61,8 @@ public class Config implements Runnable{
             }
         } while (programState.compareTo("0") == 0);
 
-        logMessage += " Database Daemon - End\n";
+        logMessage = " Database Daemon - End\n";
+        System.out.println(logMessage);
         /*
         FileLog.message += logMessage;
         new FileLog().log();
