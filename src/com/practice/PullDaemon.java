@@ -1,11 +1,17 @@
 package com.practice;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PullDaemon implements Runnable{
     private final Thread thread;
+    private static final Logger logger =
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final Daemon daemon;
 
-    PullDaemon() {
+    PullDaemon(Daemon daemon) {
+        this.daemon = daemon;
         thread = new Thread(this, "Pull Daemon");
     }
 
@@ -17,10 +23,13 @@ public class PullDaemon implements Runnable{
     public void run() {
         var countDown = 1;
 
+        logger.log(Level.INFO, "Pull Daemon - Start");
+
         do {
             try {
                 // cmd.exe /c cd toppAppDBdaemon/ && git pull origin master
                 if(--countDown == 0) {
+                    logger.log(Level.INFO, "Pull Daemon - Sync Start");
 
                     Config.isDatabaseSyncing = true;
 
@@ -34,13 +43,18 @@ public class PullDaemon implements Runnable{
                     Config.isDatabaseSyncing = false;
 
                     countDown = 6;
+
+                    logger.log(Level.INFO, "Pull Daemon - Sync Exit");
+
                 } else
                     Thread.sleep(2000);
 
-            } catch (InterruptedException | IOException ignore) {
-
+            } catch (InterruptedException | IOException e) {
+                logger.log(Level.SEVERE, "Error Pull Daemon", e);
             }
 
-        } while(Config.programState.compareTo("0") == 0);
+        } while(daemon.getProgramState().compareTo("0") == 0);
+
+        logger.log(Level.INFO, "Pull Daemon - Exit");
     }
 }
