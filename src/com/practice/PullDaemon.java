@@ -33,6 +33,7 @@ public class PullDaemon implements Runnable{
 
                     Config.isDatabaseSyncing = true;
 
+
                     var process = new ProcessBuilder("cmd.exe", "/c", "cd",
                            Main.userRoot + "toppAppDBdaemon/", "&&", "git", "pull", "origin", "master").start();
 
