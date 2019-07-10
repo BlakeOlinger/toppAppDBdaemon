@@ -24,8 +24,6 @@ public class Main {
 
         var daemon = new Daemon(configPath);
 
-        System.out.println("test change");
-
         daemon.start();
 
         logger.log(Level.INFO, "Main Thread - Exit");
