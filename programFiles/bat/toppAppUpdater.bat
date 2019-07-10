@@ -2,6 +2,6 @@
 
 cd "C:\Users\bolinger\Desktop\test install\"
 
-start topAppUpdater.jar
+start toppAppUpdater.jar
 
 exit
