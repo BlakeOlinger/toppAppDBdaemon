@@ -35,7 +35,15 @@ public class PullDaemon implements Runnable{
 
 
                     var process = new ProcessBuilder("cmd.exe", "/c", "cd",
-                           Main.userRoot + "toppAppDBdaemon/", "&&", "git", "pull", "origin", "master").start();
+                           Main.userRoot + "toppAppDBdaemon/", "&&", "git", "commit", "-a",
+                            "-m", "test").start();
+
+                    process.waitFor();
+
+                    process.destroy();
+
+                    process = new ProcessBuilder("cmd.exe", "/c", "cd",
+                            Main.userRoot + "toppAppDBdaemon/", "&&", "git", "pull").start();
 
                     process.waitFor();
 
