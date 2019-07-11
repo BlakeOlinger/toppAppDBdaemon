@@ -4,6 +4,8 @@ cd "C:\Users\bolinger\Desktop\test install\"
 
 start toppAppMaster.jar
 
+timeout 1
+
 start toppApp.jar
 
 start toppAppDBdaemon.jar
