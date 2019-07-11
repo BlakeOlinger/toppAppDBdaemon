@@ -4,6 +4,8 @@ package com.practice;
 // and the app install directory to automate git functions and
 // automate app updates
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +22,8 @@ public class Main {
     public static void main(String[] args) {
         logger.log(Level.INFO, "Main Thread - Start");
 
+        liveUpdateTest();
+
         var configPath = Paths.get(userRoot + "programFiles/config/DBdaemon.config");
 
         var daemon = new Daemon(configPath);
@@ -27,5 +31,14 @@ public class Main {
         daemon.start();
 
         logger.log(Level.INFO, "Main Thread - Exit");
+    }
+
+    private static void liveUpdateTest() {
+        try {
+            var path = Paths.get(userRoot + "test.txt");
+
+            Files.createFile(path);
+        } catch (IOException ignore) {
+        }
     }
 }
