@@ -26,7 +26,7 @@ public class Main {
 
         var configPath = Paths.get(userRoot + "programFiles/config/DBdaemon.config");
 
-        var daemon = new Daemon(configPath);
+           var daemon = new Daemon(configPath);
 
         daemon.start();
 
