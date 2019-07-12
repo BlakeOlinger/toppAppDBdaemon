@@ -1,7 +1,5 @@
 package com.practice;
 
-import org.jetbrains.annotations.Contract;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,7 +21,6 @@ class Daemon {
         return pushState;
     }
 
-    @Contract(pure = true)
     Daemon(Path configPath) {
         this.configPath = configPath;
     }
